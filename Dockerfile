@@ -20,7 +20,6 @@ WORKDIR /app
 
 COPY --from=builder /app/target/release/bit-charts-api .
 EXPOSE 4500
-ENV PORT=4500
 
 CMD ["./bit-charts-api"]
 
