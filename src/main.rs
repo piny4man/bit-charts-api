@@ -1,11 +1,15 @@
 use axum::{response::Json, routing::get, Router};
 use serde_json::Value;
+use std::env;
 use std::fs::File;
 use std::io::Read;
 use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
 async fn main() {
+    let port = env::var("PORT").unwrap_or_else(|_| "4500".to_string());
+    let addr = format!("0.0.0.0:{}", port);
+
     let cors = CorsLayer::new()
         .allow_origin(Any)
         .allow_methods(Any)
@@ -15,9 +19,9 @@ async fn main() {
         .route("/transactions", get(handler))
         .layer(cors);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:4500").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
 
-    println!("listening on {}", listener.local_addr().unwrap());
+    println!("listening on {}", addr);
     axum::serve(listener, app).await.unwrap();
 }
 
