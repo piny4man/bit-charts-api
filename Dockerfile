@@ -17,5 +17,5 @@ RUN set -eux; \
 
 COPY --from=builder /app /
 EXPOSE 4500
-CMD ["./app"]
+CMD ["/app"]
 
