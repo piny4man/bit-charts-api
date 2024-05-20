@@ -5,13 +5,14 @@ COPY . .
 
 RUN cargo build --release
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     ca-certificates \
     gcc \
     libc6-dev \
+    libssl-dev \
     ; \
     rm -rf /var/lib/apt/lists/*;
 
